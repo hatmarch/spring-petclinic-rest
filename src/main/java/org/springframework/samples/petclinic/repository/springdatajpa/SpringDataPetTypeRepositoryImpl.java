@@ -22,7 +22,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.springframework.context.annotation.Profile;
+
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.Visit;
@@ -32,9 +32,9 @@ import org.springframework.samples.petclinic.model.Visit;
  *
  */
 
-@Profile("spring-data-jpa")
+
 public class SpringDataPetTypeRepositoryImpl implements PetTypeRepositoryOverride {
-	
+
 	@PersistenceContext
     private EntityManager em;
 
@@ -43,7 +43,7 @@ public class SpringDataPetTypeRepositoryImpl implements PetTypeRepositoryOverrid
 	public void delete(PetType petType) {
         this.em.remove(this.em.contains(petType) ? petType : this.em.merge(petType));
 		Integer petTypeId = petType.getId();
-		
+
 		List<Pet> pets = this.em.createQuery("SELECT pet FROM Pet pet WHERE type_id=" + petTypeId).getResultList();
 		for (Pet pet : pets){
 			List<Visit> visits = pet.getVisits();
